@@ -2,15 +2,13 @@ import streamlit as st
 import google.generativeai as genai
 
 # --- 1. KONFIGURACIJA ---
-# Ostavi taj novi ključ koji ti je upravo prošao
-API_KEY = "AIzaSyDWZ9W862k6p8E2TYC4hSqXvntGcEmEYsQ" 
-
+# Ova linija kaže: "Uzmi ključ iz tajnog sefa koji sam podesio"
 try:
+    API_KEY = st.secrets["GEMINI_API_KEY"]
     genai.configure(api_key=API_KEY, transport='rest')
-    # OVO JE JEDINA PROMENA (Prelazak na 2.0 rešava 404 grešku)
     model = genai.GenerativeModel('gemini-2.0-flash')
 except Exception as e:
-    st.error(f"Sizif se buni: {e}")
+    st.error(f"Sizif ne vidi ključ u sefu: {e}")
 
 # --- 2. DIZAJN (DARK MODE) ---
 st.set_page_config(page_title="Sizif.ai", page_icon="🗿")
